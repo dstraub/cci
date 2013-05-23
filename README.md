@@ -34,7 +34,7 @@ Build the project as usual with 'mvn install'.
 Run maven with the profile 'local' and parameter 'jboss.as.home' copies a test application and camel modules in the corresponding JBoss directories :   
 `mvn install -Plocal -Djboss.as.home=JBOSS_AS_HOME_PATH`
 
-- cci:  
+- cci-impl:  
   Implementation of a litte bit CDI magic, JUnit tests using Weld
   
 - cci-module:   
