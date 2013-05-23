@@ -2,19 +2,20 @@ Leightweigth Camel CDI Integration
 ==================================
 
 Camel supports since version 2.10 CDI with "camel-cdi".
-This implementation relies on http://incubator.apache.org/deltaspike and uses a common pattern (Singleton/Startup) to start an CamelCDIContext.
-I also have a few ideas from this project used. 
+This implementation relies on [deltaspike](http://incubator.apache.org/deltaspike) and uses a common pattern (Singleton/Startup) to start an CamelCDIContext.  
+I also have a few ideas from this project used, thank you !
 
-But here, the main actor is a CDI-Extension: 
-- creates the CamelContext and integrates the CDI-BeanManager with them
-- discovers and registers all available RouteBuilders
-- discovers and registers all beans with camel annotations: @Consume, @Produce
+But here, the main actor is a CDI-Extension:   
+
+- creates the CamelContext and integrates the CDI-BeanManager with them  
+- discovers and registers all available RouteBuilders  
+- discovers and registers all beans with camel annotations: @Consume, @Produces  
 - starts the context.
 
 That's all. Nothing more to do ...
 
-How to
- 
+How to  
+
 - create a consumer ? Write a bean and use @Consume (see [SampleFileConsumer](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleFileConsumer.java))
 
 - create a producer ? Write a bean and use @Produce (see [SampleJmsProducer](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleJmsProducer.java))
@@ -30,22 +31,20 @@ I have only Weld and JBoss-AS 7 for development and tests used.
 Projects:
 --------
 Build the project as usual with 'mvn install'.
-Run maven with the profile 'local' and parameter 'jboss.as.home' copies a test application and camel modules in the corresponding JBoss directories.
+Run maven with the profile 'local' and parameter 'jboss.as.home' copies a test application and camel modules in the corresponding JBoss directories.  
 (mvn install -Plocal -Djboss.as.home=JBOSS_AS_HOME_PATH) 
 
-- cci:
+- cci:  
   Implementation of a litte bit CDI magic, JUnit tests using Weld
   
-- cci-modile: 
-  JBoss 7 module with some required camel components. 
-
+- cci-modile:   
+  JBoss 7 module with some required camel components.   
   Unzip the artefact in the jboss-as-xxx/modules directory.
   
   
-- cci-testapp:
-  Simple REST-application, copy the artefact to jboss-as-xxx/standalone/deployments directory.
-  
-  The JMS-samples require an running activemq-broker on the same host (with default port 61616).
+- cci-testapp:  
+  Simple REST-application, copy the artefact to jboss-as-xxx/standalone/deployments directory.  
+  The JMS samples require an running activemq-broker on the same host (with default port 61616).
   
   Test the application with 
   - curl localhost:8080/cci
