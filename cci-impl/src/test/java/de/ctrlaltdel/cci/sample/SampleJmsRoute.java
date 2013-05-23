@@ -11,7 +11,7 @@ public class SampleJmsRoute extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		from("jms:data")
-        .log("received: ${in.body}")
+		.log("received: ${in.body}")
 		.bean(SampleJmsProducer.class, "echo")
 		;
 	}

@@ -13,15 +13,19 @@ But here, the main actor is a CDI-Extension:
 
 That's all. Nothing more to do ...
 
-How to 
-- create a consumer ? Write a bean and use @Consume (see SampleFileConsumer)
-- create a producer ? Write a bean and use @Produce (see SampleJmsProducer)
-- create a route ? Write a bean an implement RouteBuilder (see SampleFileRoute, SampleJmsRoute)
-- create a componet ? Write a bean/component and use @Named (see JmsComponent/HelloWorldComponent).
+How to
+ 
+- create a consumer ? Write a bean and use @Consume (see [SampleFileConsumer](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleFileConsumer.java))
 
-The rest is done by CDI magic. 
+- create a producer ? Write a bean and use @Produce (see [SampleJmsProducer](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleJmsProducer.java))
 
-I have only WELD and JBoss-AS 7 for development and tests used.
+- create a route ? Write a bean an implement RouteBuilder (see [SampleJmsRoute](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleJmsRoute.java))
+
+- create a componet ? Write a bean/component and use @Named (see [JmsComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/JmsComponent.java) / [HelloWorldComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/comp/HelloWorldComponent.java))
+
+The rest is done by CDI magic. Run [TestCamelContext](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/TestCamelContext.java)
+
+I have only Weld and JBoss-AS 7 for development and tests used.
 
 Projects:
 --------
@@ -30,20 +34,23 @@ Run maven with the profile 'local' and parameter 'jboss.as.home' copies a test a
 (mvn install -Plocal -Djboss.as.home=JBOSS_AS_HOME_PATH) 
 
 - cci:
-  Implementation of a litte bit CDI magic, JUnit tests using WELD
+  Implementation of a litte bit CDI magic, JUnit tests using Weld
   
 - cci-modile: 
   JBoss 7 module with some required camel components. 
+
   Unzip the artefact in the jboss-as-xxx/modules directory.
   
   
 - cci-testapp:
   Simple REST-application, copy the artefact to jboss-as-xxx/standalone/deployments directory.
+  
   The JMS-samples require an running activemq-broker on the same host (with default port 61616).
+  
   Test the application with 
-  curl localhost:8080/cci
-  curl localhost:8080/cci/jms/hallo - routes "hallo" to the topic 'data'
-  curl localhost:8080/cci/file/hallo - routes "hallo" to the jboss-as-xxx/standalone/tmp/end     
+  - curl localhost:8080/cci
+  - curl localhost:8080/cci/jms/hallo - routes "hallo" to the topic 'data'
+  - curl localhost:8080/cci/file/hallo - routes "hallo" to the jboss-as-xxx/standalone/tmp/end     
  
 
 
