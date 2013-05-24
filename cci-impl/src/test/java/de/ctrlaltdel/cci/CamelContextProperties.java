@@ -39,9 +39,9 @@ public class CamelContextProperties  {
 	
 	/*
 	 *  there is no simple way to change the object name of the camel context.
-	 *  normally, the objectname contains the hostname - but if you manage a lot of host eg. with nagios is easier to have the same objectname on each host.
+	 *  normally, the objectname contains the hostname - but if you manage a lot of host eg. with nagios it's easier to have the same objectname on each host.
 	 *  
-	 *  unfortunatly, there is some logic in the camelContext.getManagementStrategy method
+	 *  unfortunatly, there is some logic in CamelContext.getManagementStrategy method
 	 *  this is done in ManagementStrategyFactory.create and isn't called if we use 'setManagementStrategy' 
 	 *  therefore this ugly hack is required :-(
 	 */
