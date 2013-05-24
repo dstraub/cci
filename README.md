@@ -1,4 +1,4 @@
-Leightweigth Camel CDI Integration
+Lightweigth Camel CDI Integration
 ==================================
 
 Camel supports since version 2.10 CDI with [camel-cdi](http://camel.apache.org/cdi.html).
