@@ -8,7 +8,7 @@ But here, the main actor is a CDI-Extension:
 
 - creates the CamelContext
 - integrates the CDI-BeanManager with the CamelContext for bean discovery
-- discovers and registers all available RouteBuilders  
+- discovers and registers all available Java DSL routes  
 - discovers and registers all beans with camel annotations: @Consume, @Produce  
 - starts the context
 
@@ -44,7 +44,7 @@ Run maven with the profile 'local' and parameter 'jboss.as.home' copies a test a
   
 - cci-testapp:  
   Simple REST-application for test purpose, copy the artefact to jboss-as-xxx/standalone/deployments directory.  
-  The JMS samples require an running activemq-broker on the same host (with default port 61616).
+  The JMS sample requires an running activemq-broker on the same host (with default port 61616).
   
   Test the application with 
   - curl localhost:8080/cci - list the injected CamelContext with routes and endpoints
