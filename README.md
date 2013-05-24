@@ -24,7 +24,7 @@ How to
 
 The rest is done by CDI magic. Run [TestCamelContext](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/TestCamelContext.java) ...
 
-I have only Weld and JBoss-AS 7 for development and tests used.
+I have only used Weld and JBoss-AS 7 for development and tests.
 
 Projects:
 --------  

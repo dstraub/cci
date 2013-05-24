@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
+import java.util.Hashtable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import org.apache.activemq.broker.BrokerService;
@@ -26,7 +28,6 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ctrlaltdel.cci.CamelBeanManagerIntegration;
 import de.ctrlaltdel.cci.sample.SampleJmsProducer;
 
 /**
@@ -38,7 +39,9 @@ public class TestCamelContext {
 
 	private static Logger LOG = LoggerFactory.getLogger(TestCamelContext.class);
 	
-	public static final String BROKER_URL = "tcp://localhost:61616"; 
+	public static final String BROKER_URL = "tcp://localhost:61616";
+	
+	public static final String CONTEX_NAME = "test-context";
 	
 	@Inject
 	private CamelContext camelContext;
@@ -47,15 +50,15 @@ public class TestCamelContext {
 	private SampleJmsProducer jmsProducer;
 
 	@Inject
-	private CamelContextNameBean camelContextNameBean;
+	private CamelContextProperties camelContextNameBean;
 
 	public static CountDownLatch COUNTDOWN;
 	
 	@Test
-	public void testCamelContext() {
+	public void testCamelContext() throws Exception {
 		LOG.info("CamelContext: " + camelContext);
 		
-		Assert.assertEquals(camelContextNameBean.getName(), camelContext.getName());
+		Assert.assertEquals(CONTEX_NAME, camelContext.getName());
 		
 		Injector injector = camelContext.getInjector();
 		Assert.assertEquals(CamelBeanManagerIntegration.class, injector.getClass());
@@ -65,6 +68,21 @@ public class TestCamelContext {
 			registry = ((PropertyPlaceholderDelegateRegistry) registry).getRegistry();
 		}
 		Assert.assertEquals(CamelBeanManagerIntegration.class, registry.getClass());
+	
+		// check objectname replacment
+		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+		mBeanServer.getObjectInstance(getContextObjectName("context", CONTEX_NAME));
+	}
+
+	/**
+	 * getContextObjectName
+	 */
+	private ObjectName getContextObjectName(String type, String name) throws MalformedObjectNameException {
+		Hashtable<String, String> objectNameProperties = new Hashtable<String, String>();
+		objectNameProperties.put("context", CONTEX_NAME);
+		objectNameProperties.put("type", type);
+		objectNameProperties.put("name", "\"" + name + "\"");
+		return new ObjectName("org.apache.camel", objectNameProperties);
 	}
 	
 	@Test
@@ -149,13 +167,13 @@ public class TestCamelContext {
 		COUNTDOWN = new CountDownLatch(5);
 		camelContext.addRoutes(route);
 		
-		COUNTDOWN.await(1, TimeUnit.MINUTES);
+		COUNTDOWN.await(2, TimeUnit.MINUTES);
 		
 		Assert.assertEquals(0, COUNTDOWN.getCount());
 		
+		// test if jmx works
+		ObjectName objectName = getContextObjectName("routes", "hello");
 		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-		ObjectName objectName = mBeanServer.queryNames(new ObjectName("org.apache.camel:context=*,type=routes,name=\"hello\""), null).iterator().next();
-		
 		Long exchangesTotal = (Long) mBeanServer.getAttribute(objectName, "ExchangesTotal");
 		Assert.assertTrue(5 <= exchangesTotal);
 		
@@ -169,6 +187,7 @@ public class TestCamelContext {
 		try {
 			broker = createBroker();
 			if (broker == null) {
+				// todo - use an running broker ...
 				return;
 			}
 			
