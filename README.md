@@ -1,7 +1,7 @@
 Leightweigth Camel CDI Integration
 ==================================
 
-Camel supports since version 2.10 CDI with "camel-cdi".
+Camel supports since version 2.10 CDI with [camel-cdi](http://camel.apache.org/cdi.html).
 This implementation relies on [deltaspike](http://incubator.apache.org/deltaspike) and uses a common pattern (Singleton/Startup) to start an CamelCDIContext (I also have a few ideas from this project used, thank you).
 
 But here, the main actor is a CDI-Extension:   
@@ -20,7 +20,7 @@ How to
 - create a producer ? Write a bean and use @Produce (see [SampleJmsProducer](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleJmsProducer.java)).
 - create a route ? Write a bean an implement RouteBuilder (see [SampleJmsRoute](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleJmsRoute.java)).
 - create a componet ? Write a bean/component and use @Named (see [JmsComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/JmsComponent.java) / [HelloWorldComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/comp/HelloWorldComponent.java)). 
-- access the CamelContext ? Use @Inject !
+- access the CamelContext ? Use @Inject (see [CciTestService](https://github.com/dstraub/cci/blob/master/cci-testapp/src/main/java/de/ctrlaltdel/cci/testapp/CciTestService.java)).
 
 The rest is done by CDI magic. Run [TestCamelContext](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/TestCamelContext.java) ...
 
