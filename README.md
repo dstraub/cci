@@ -19,13 +19,13 @@ How to
 - create a consumer ? Write a bean and use @Consume (see [SampleFileConsumer](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleFileConsumer.java)).
 - create a producer ? Write a bean and use @Produce (see [SampleJmsProducer](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleJmsProducer.java)).
 - create a route ? Write a bean an implement RouteBuilder (see [SampleJmsRoute](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/SampleJmsRoute.java)).
-- create a componet ? Write a bean/component and use @Named (see [JmsComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/JmsComponent.java) / [HelloWorldComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/comp/HelloWorldComponent.java)). 
+- create a component ? Write a bean/component and use @Named (see [JmsComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/JmsComponent.java) / [HelloWorldComponent](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/sample/comp/HelloWorldComponent.java)). 
 - access the CamelContext ? Use @Inject (see [CciTestService](https://github.com/dstraub/cci/blob/master/cci-testapp/src/main/java/de/ctrlaltdel/cci/testapp/CciTestService.java)).
 
 The rest is done by CDI magic. Run [TestCamelContext](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/TestCamelContext.java) ...
 
 I have used Weld and JBoss-AS 7 for development and tests.
-It's runs on Oracle Weblic as well.
+It's runs on Oracle Weblogic as well.
 
 Projects:
 --------  
