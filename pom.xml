@@ -8,9 +8,9 @@
   <version>1.0.0-SNAPSHOT</version>
 
   <properties>
-    <version.camel>2.11.0</version.camel>
+    <version.camel>2.13.1</version.camel>
     <version.weld>1.1.10.Final</version.weld>
-    <version.activemq>5.8.0</version.activemq>
+    <version.activemq>5.9.0</version.activemq>
     <maven.build.timestamp.format>dd.MM.yyyy-HH:mm:ss</maven.build.timestamp.format>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -28,7 +28,6 @@
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-client</artifactId>
         <version>${version.activemq}</version>
-        <scope>provided</scope>
         <exclusions>
           <exclusion>
             <groupId>org.apache.geronimo.specs</groupId>
@@ -42,23 +41,9 @@
       </dependency>
 
       <dependency>
-        <groupId>org.apache.activemq</groupId>
-        <artifactId>activemq-camel</artifactId>
-        <version>${version.activemq}</version>
-        <scope>provided</scope>
-        <exclusions>
-          <exclusion>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jta_1.0.1B_spec</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-
-      <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-core</artifactId>
         <version>${version.camel}</version>
-        <scope>provided</scope>
         <exclusions>
           <exclusion>
             <groupId>com.sun.xml.bind</groupId>
@@ -69,14 +54,9 @@
 
       <dependency>
         <groupId>org.apache.camel</groupId>
-        <artifactId>camel-jms</artifactId>
+        <artifactId>camel-sjms</artifactId>
         <version>${version.camel}</version>
-        <scope>provided</scope>
         <exclusions>
-          <exclusion>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring</artifactId>
-          </exclusion>
           <exclusion>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
@@ -88,22 +68,10 @@
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-broker</artifactId>
         <version>${version.activemq}</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.activemq</groupId>
-        <artifactId>activemq-kahadb-store</artifactId>
-        <version>${version.activemq}</version>
-        <scope>test</scope>
         <exclusions>
           <exclusion>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-j2ee-management_1.1_spec</artifactId>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-openwire-legacy</artifactId>
           </exclusion>
         </exclusions>
       </dependency>

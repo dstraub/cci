@@ -1,10 +1,10 @@
 package de.ctrlaltdel.cci.sample.comp;
 
-import java.util.Date;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
+
+import java.util.Date;
 
 /**
  * The HelloWorld consumer.

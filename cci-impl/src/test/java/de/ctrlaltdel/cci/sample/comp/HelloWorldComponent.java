@@ -1,11 +1,11 @@
 package de.ctrlaltdel.cci.sample.comp;
 
-import java.util.Map;
+import org.apache.camel.Endpoint;
+import org.apache.camel.impl.DefaultComponent;
 
 import javax.inject.Named;
 
-import org.apache.camel.Endpoint;
-import org.apache.camel.impl.DefaultComponent;
+import java.util.Map;
 
 /**
  * Represents the component that manages {@link HelloWorldEndpoint}.

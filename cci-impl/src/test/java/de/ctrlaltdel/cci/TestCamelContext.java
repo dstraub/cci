@@ -1,19 +1,7 @@
 package de.ctrlaltdel.cci;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.lang.management.ManagementFactory;
-import java.net.URL;
-import java.util.Hashtable;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import de.ctrlaltdel.cci.sample.SampleJmsProducer;
 
-import javax.inject.Inject;
-import javax.management.MBeanServer;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-
-import org.apache.activemq.broker.BrokerService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Route;
@@ -21,14 +9,24 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.PropertyPlaceholderDelegateRegistry;
 import org.apache.camel.spi.Injector;
 import org.apache.camel.spi.Registry;
-import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ctrlaltdel.cci.sample.SampleJmsProducer;
+import javax.inject.Inject;
+import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.lang.management.ManagementFactory;
+import java.net.URL;
+import java.util.Hashtable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * TestCamelContext
@@ -39,7 +37,7 @@ public class TestCamelContext {
 
 	private static Logger LOG = LoggerFactory.getLogger(TestCamelContext.class);
 	
-	public static final String BROKER_URL = "tcp://localhost:61616";
+	public static final String BROKER_URL = "vm://localhost";
 	
 	public static final String CONTEX_NAME = "test-context";
 	
@@ -53,8 +51,10 @@ public class TestCamelContext {
 	private CamelContextProperties camelContextNameBean;
 
 	public static CountDownLatch COUNTDOWN;
-	
-	@Test
+
+
+
+    @Test
 	public void testCamelContext() throws Exception {
 		LOG.info("CamelContext: " + camelContext);
 		
@@ -145,7 +145,7 @@ public class TestCamelContext {
 			if (file.getName().equals(outFile.getName())) {
 				found = true;
 			}
-			file.delete();
+			boolean rc = file.delete();
 		}
 		Assert.assertTrue(found);
 		
@@ -170,7 +170,7 @@ public class TestCamelContext {
 		COUNTDOWN.await(2, TimeUnit.MINUTES);
 		
 		Assert.assertEquals(0, COUNTDOWN.getCount());
-		
+
 		// test if jmx works
 		ObjectName objectName = getContextObjectName("routes", "hello");
 		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
@@ -183,48 +183,11 @@ public class TestCamelContext {
 	
 	@Test
 	public void testJms() throws Exception {
-		BrokerService broker = null;
-		try {
-			broker = createBroker();
-			if (broker == null) {
-				// todo - use an running broker ...
-				return;
-			}
-			
-			COUNTDOWN = new CountDownLatch(1);
-			
-			jmsProducer.send("hallo");
-			
-			COUNTDOWN.await(1, TimeUnit.MINUTES);
-			
-			Assert.assertEquals(0, COUNTDOWN.getCount());
-		} finally {
-			try {
-				File dataDir = broker.getDataDirectoryFile();
-				broker.stop();
-				FileUtils.deleteDirectory(dataDir);
-			} catch (Exception x) {
-				LOG.debug(x.getClass().getSimpleName() + ": " + x.getMessage());
-			}
-		}
-		
+        COUNTDOWN = new CountDownLatch(1);
+        jmsProducer.send("hallo");
+        COUNTDOWN.await(1, TimeUnit.MINUTES);
+        Assert.assertEquals(0, COUNTDOWN.getCount());
 	}
 
-	/**
-	 * createBroker
-	 */
-	private BrokerService createBroker() {
-		BrokerService broker = new BrokerService();
-		broker.setBrokerName("test");
-		try {
-			broker.addConnector(BROKER_URL);
-			broker.setDataDirectory(System.getProperty("user.dir") + "/target/activemq");
-			broker.start();
-			return broker;
-		} catch (Exception x) {
-			LOG.error(x.getClass().getSimpleName() + ": " + x.getMessage());
-		}
-		return null;
-	}
 
 }

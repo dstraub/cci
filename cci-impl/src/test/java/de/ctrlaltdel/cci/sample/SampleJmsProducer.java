@@ -1,12 +1,12 @@
 package de.ctrlaltdel.cci.sample;
 
-import javax.enterprise.context.ApplicationScoped;
+import de.ctrlaltdel.cci.TestCamelContext;
 
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.junit.Assert;
 
-import de.ctrlaltdel.cci.TestCamelContext;
+import javax.enterprise.context.ApplicationScoped;
 
 
 /**

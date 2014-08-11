@@ -2,22 +2,10 @@
 
 <module xmlns="urn:jboss:module:1.1" name="org.apache.camel">
   <resources>
-    <resource-root path="activemq-camel-5.8.0.jar" />
-    <resource-root path="activemq-client-5.8.0.jar" />
-    <resource-root path="activemq-pool-5.8.0.jar" />
-    <resource-root path="activemq-spring-5.8.0.jar" />
+    <resource-root path="activemq-client-${version.activemq}.jar" />
     <resource-root path="hawtbuf-1.9.jar" />
-    <resource-root path="camel-core-2.11.0.jar" />
-    <resource-root path="camel-jms-2.11.0.jar" />
-    <resource-root path="spring-beans-3.1.4.RELEASE.jar" />
-    <resource-root path="spring-jms-3.1.4.RELEASE.jar" />
-    <resource-root path="spring-context-3.1.4.RELEASE.jar" />
-    <resource-root path="spring-tx-3.1.4.RELEASE.jar" />
-    <resource-root path="spring-aop-3.1.4.RELEASE.jar" />
-    <resource-root path="spring-core-3.1.4.RELEASE.jar" />
-    <resource-root path="xbean-spring-3.12.jar" />
-    <resource-root path="spring-asm-3.1.4.RELEASE.jar" />
-    <resource-root path="spring-expression-3.1.4.RELEASE.jar" />
+    <resource-root path="camel-core-${version.camel}.jar" />
+    <resource-root path="camel-sjms-${version.camel}.jar" />
   </resources>
 
   <dependencies>

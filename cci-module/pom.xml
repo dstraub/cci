@@ -26,12 +26,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-camel</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-core</artifactId>
       <scope>runtime</scope>
@@ -39,7 +33,7 @@
 
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jms</artifactId>
+      <artifactId>camel-sjms</artifactId>
       <scope>runtime</scope>
     </dependency>
 

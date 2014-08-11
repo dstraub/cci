@@ -1,7 +1,12 @@
 package de.ctrlaltdel.cci;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.apache.camel.CamelContext;
+import org.apache.camel.Consume;
+import org.apache.camel.Produce;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.impl.DefaultCamelBeanPostProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterDeploymentValidation;
@@ -12,13 +17,8 @@ import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.ProcessManagedBean;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.Consume;
-import org.apache.camel.Produce;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.impl.DefaultCamelBeanPostProcessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * CdiCamelExtension
@@ -61,39 +61,40 @@ public class CdiCamelExtension implements Extension {
 		
 		CamelContext camelContext = resolveCamelContext(beanManager);
 		LOG.info("CamelContext created " + camelContext.getName());
-		
-		DefaultCamelBeanPostProcessor beanPostProcessor = new DefaultCamelBeanPostProcessor(camelContext);
 
-		for (Bean<?> bean: camelBeans) {
-			Object instance = beanManager.getReference(bean, bean.getBeanClass(), beanManager.createCreationalContext(bean));
-			String name = bean.getName();
-			if (name == null) {
-				name = bean.getBeanClass().getSimpleName();
-			}
-			try {
-				beanPostProcessor.postProcessBeforeInitialization(instance, name);
-				beanPostProcessor.postProcessAfterInitialization(instance, name);
-			} catch (Exception x) {
-				LOG.error(x.getClass().getSimpleName() + ": " + x.getMessage());
-			}
-		}
-		
-		Set<Bean<?>> rBeans = beanManager.getBeans(RouteBuilder.class);
-		for (Bean<?> rBean : rBeans) {
-			RouteBuilder routeBuilder = (RouteBuilder) beanManager.getReference(rBean, RouteBuilder.class, beanManager.createCreationalContext(rBean));
-			try {
-				camelContext.addRoutes(routeBuilder);
-			} catch (Exception x) {
-				LOG.error(x.getClass().getSimpleName() + ": " + x.getMessage());
-			}
-		}
-		
-		try {
-			camelContext.start();
-			LOG.info("CamelContext "  + camelContext.getName() + ": " + camelContext.getStatus());
-		} catch (Exception x) {
-			LOG.error(x.getClass().getSimpleName() + ": " + x.getMessage());
-		}
+        try {
+            camelContext.start();
+            LOG.info("CamelContext "  + camelContext.getName() + ": " + camelContext.getStatus());
+        } catch (Exception x) {
+            LOG.error(x.getClass().getSimpleName() + ": " + x.getMessage(), x);
+        }
+
+        DefaultCamelBeanPostProcessor beanPostProcessor = new DefaultCamelBeanPostProcessor(camelContext);
+
+        for (Bean<?> bean: camelBeans) {
+            Object instance = beanManager.getReference(bean, bean.getBeanClass(), beanManager.createCreationalContext(bean));
+            String name = bean.getName();
+            if (name == null) {
+                name = bean.getBeanClass().getSimpleName();
+            }
+            try {
+                beanPostProcessor.postProcessBeforeInitialization(instance, name);
+                beanPostProcessor.postProcessAfterInitialization(instance, name);
+            } catch (Exception x) {
+                LOG.error(x.getClass().getSimpleName() + ": " + x.getMessage());
+            }
+        }
+
+        Set<Bean<?>> rBeans = beanManager.getBeans(RouteBuilder.class);
+        for (Bean<?> rBean : rBeans) {
+            RouteBuilder routeBuilder = (RouteBuilder) beanManager.getReference(rBean, RouteBuilder.class, beanManager.createCreationalContext(rBean));
+            try {
+                camelContext.addRoutes(routeBuilder);
+            } catch (Exception x) {
+                LOG.error(x.getClass().getSimpleName() + ": " + x.getMessage());
+            }
+        }
+
 	}
 	
 	

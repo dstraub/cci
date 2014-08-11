@@ -1,11 +1,11 @@
 package de.ctrlaltdel.cci.testapp.sample;
 
-import javax.enterprise.context.ApplicationScoped;
-
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.enterprise.context.ApplicationScoped;
 
 /**
  * SampleJmsProducer

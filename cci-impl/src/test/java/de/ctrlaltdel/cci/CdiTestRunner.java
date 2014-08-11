@@ -19,7 +19,7 @@ public class CdiTestRunner extends BlockJUnit4ClassRunner {
 	static {
 		System.setProperty("input", System.getProperty("user.dir") + "/target/tmp/input");
 		System.setProperty("start", System.getProperty("user.dir") + "/target/tmp/start");
-		System.setProperty("end", System.getProperty("user.dir") + "/target/tmp/end");
+		System.setProperty("end",   System.getProperty("user.dir") + "/target/tmp/end");
 	}
 
     

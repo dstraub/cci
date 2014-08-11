@@ -1,9 +1,9 @@
 package de.ctrlaltdel.cci;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import org.apache.camel.IsSingleton;
+import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.spi.Injector;
+import org.apache.camel.spi.Registry;
 
 import javax.enterprise.context.spi.CreationalContext;
 import javax.enterprise.inject.Any;
@@ -11,10 +11,10 @@ import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.util.AnnotationLiteral;
 
-import org.apache.camel.IsSingleton;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.spi.Injector;
-import org.apache.camel.spi.Registry;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * CamelBeanManagerIntegration
