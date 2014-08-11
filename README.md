@@ -24,7 +24,8 @@ How to
 
 The rest is done by CDI magic. Run [TestCamelContext](https://github.com/dstraub/cci/blob/master/cci-impl/src/test/java/de/ctrlaltdel/cci/TestCamelContext.java) ...
 
-I have only used Weld and JBoss-AS 7 for development and tests.
+I have used Weld and JBoss-AS 7 for development and tests.
+It's runs on Oracle Weblic as well.
 
 Projects:
 --------  
@@ -43,15 +44,10 @@ Run maven with the profile 'local' and parameter 'jboss.as.home' copies a test a
   
   
 - cci-testapp:  
-  Simple REST-application for test purpose, copy the artefact to jboss-as-xxx/standalone/deployments directory.  
-  The JMS sample requires an running activemq-broker on the same host (with default port 61616).
-  
+  Simple REST-application for test purpose, copy the artefact to jboss-as-xxx/standalone/deployments directory (or use your application server deployment tool).  
+    
   Test the application with 
   - curl localhost:8080/cci - list the injected CamelContext with routes and endpoints
   - curl localhost:8080/cci/jms/hallo - routes "hallo" to the topic 'data'
   - curl localhost:8080/cci/file/hallo - routes "hallo" to the jboss-as-xxx/standalone/tmp/end     
- 
-
-
- 
  
